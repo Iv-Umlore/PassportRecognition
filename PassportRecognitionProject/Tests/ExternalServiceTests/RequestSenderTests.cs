@@ -11,9 +11,12 @@ namespace Tests.ExternalServiceTests
 {
     public class ExternalServiceTests
     {
+        private IRequestSender _sender;
+
         [SetUp]
         public void Setup()
         {
+            _sender = new RegulaRequestSender();
         }
 
         [Test]
@@ -29,7 +32,7 @@ namespace Tests.ExternalServiceTests
         [Test]
         public async Task TryToSendRequest()
         {
-            var response = await RequestSender.Send(URL, new RegulaServiceRequest(firstImage));
+            var response = await _sender.Send(URL, new RegulaServiceRequest(firstImage));
 
             Assert.AreEqual(firstImageExpectDocNumber, GetDocNumber((RegulaResponse)response));
         }
@@ -41,9 +44,9 @@ namespace Tests.ExternalServiceTests
             var secondRequest = new RegulaServiceRequest(secondImage);
             var thirdRequest = new RegulaServiceRequest(thirdImage);
 
-            var firstResponseTask = RequestSender.Send(URL, firstRequest);
-            var secondResponseTask = RequestSender.Send(URL, secondRequest);
-            var thirdResponseTask = RequestSender.Send(URL, thirdRequest);
+            var firstResponseTask = _sender.Send(URL, firstRequest);
+            var secondResponseTask = _sender.Send(URL, secondRequest);
+            var thirdResponseTask = _sender.Send(URL, thirdRequest);
 
             var fResponse = await firstResponseTask;
             var sResponse = await secondResponseTask;
@@ -68,13 +71,13 @@ namespace Tests.ExternalServiceTests
                 switch (requestNumber)
                 {
                     case 1:
-                        Requests.Add(new RequestInfo(RequestSender.Send(URL, new RegulaServiceRequest(firstImage)), firstImageExpectDocNumber));
+                        Requests.Add(new RequestInfo(_sender.Send(URL, new RegulaServiceRequest(firstImage)), firstImageExpectDocNumber));
                         break;
                     case 2:
-                        Requests.Add(new RequestInfo(RequestSender.Send(URL, new RegulaServiceRequest(secondImage)), secondImageExpectDocNumber));
+                        Requests.Add(new RequestInfo(_sender.Send(URL, new RegulaServiceRequest(secondImage)), secondImageExpectDocNumber));
                         break;
                     case 3:
-                        Requests.Add(new RequestInfo(RequestSender.Send(URL, new RegulaServiceRequest(thirdImage)), thirdImageExpectDocNumber));
+                        Requests.Add(new RequestInfo(_sender.Send(URL, new RegulaServiceRequest(thirdImage)), thirdImageExpectDocNumber));
                         break;
                     default: break;
                 }

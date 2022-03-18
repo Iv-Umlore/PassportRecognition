@@ -9,9 +9,9 @@ using Shared.Enums;
 
 namespace ExternalService.src
 {
-    public static class RequestSender
+    public class RegulaRequestSender: IRequestSender
     {
-        public static async Task<IExternalServiceResponse> Send(string URL, IExternalServiceRequest externalServiceRequest)
+        public async Task<IExternalServiceResponse> Send(string URL, IExternalServiceRequest externalServiceRequest)
         {
             string responseRes;
 
