@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using DocumentInfoModel = System.Object;
 using DocumentShortInfo = System.Object;
 using System.Threading.Tasks;
+using Shared.Models;
 
 namespace PassportRecognitionProject.src.Services
 {
@@ -19,20 +20,19 @@ namespace PassportRecognitionProject.src.Services
         /// <param name="image"> Исходное изображение </param>
         /// <returns> Информацию об отправляемом документе </returns>
         // object - DocumentInfoModel
-        public Task<DocumentInfoModel> RecognitionDocument(byte[] image);
+        public Task<ExternalObjectModel> RecognitionDocument(byte[] image);
 
         /// <summary>
         /// Получение информации об сохранённом документе
         /// </summary>
-        /// <param name="documentId"> уникальный идентификатор документа </param>
-        /// <param name="pages"> номера запрашиваемых страниц </param>
+        /// <param name="documentNumber"> уникальный идентификатор документа </param>
         /// <returns> Информация по запрашиваемому документу </returns>
-        public DocumentInfoModel GetDocumentInfo(Guid documentId, int[] pages);
+        public Task<ExternalObjectModel> GetDocumentInfo(string documentNumber);
 
         /// <summary>
         /// Получить список отсканированных документов
         /// </summary>
         /// <returns> Список краткой инормации об готовых документах для последующего выбора </returns>
-        public List<DocumentShortInfo> GetScannedDocument();
+        public Task<List<ExternalObjectModel>> GetScannedDocument();
     }
 }

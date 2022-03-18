@@ -1,13 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
+using Shared.Models;
 
 namespace DataService.src.Repository
 {
     public interface IDbRepository<T>
     {
-        public  Task<bool> IsDocumentExists(string documentNumber);
+
+        public Task<T> AddDocument(ExternalObjectModel model);
+        public Task<T> GetDocumentInfo(string documentNumber);
+        public Task<List<T>> GetDocuments();
+
     }
 }

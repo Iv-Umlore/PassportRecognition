@@ -1,4 +1,5 @@
 using DataService.src.Database;
+using DataService.src.Repository;
 using ExternalService.src;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -32,8 +33,10 @@ namespace PassportRecognitionProject
             services.AddScoped<IDocumentService, DocumentService>();
             services.AddScoped<IExternalRecognitionService, ExternalRecognitionService>();
             services.AddScoped<IDatabaseService, DatabaseService>();
-
+            services.AddScoped<IDbRepository<ExternalObjectModel>, MongoDbRepository>();
             services.Configure<ExternalServiceInfo>(Configuration.GetSection("ExternalServiceInfo"));
+            services.Configure<MongoDbInfo>(Configuration.GetSection("MongoDbInfo"));
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

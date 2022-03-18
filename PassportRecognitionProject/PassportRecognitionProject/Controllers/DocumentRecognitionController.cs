@@ -1,8 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using PassportRecognitionProject.src.Services;
-using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace PassportRecognitionProject.Controllers
@@ -40,9 +38,9 @@ namespace PassportRecognitionProject.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("info")]
-        public IActionResult GetDocumentInfo([FromQuery]Guid documentId, [FromQuery] int[] pages = null)
+        public async Task<IActionResult> GetDocumentInfo(string documentNumber)
         {
-            return Ok(_documentService.GetDocumentInfo(documentId, pages));
+            return Ok(await _documentService.GetDocumentInfo(documentNumber));
         }
 
         /// <summary>
@@ -50,9 +48,9 @@ namespace PassportRecognitionProject.Controllers
         /// </summary>
         [HttpGet]
         [Route("scanned")]
-        public IActionResult GetScannedDocuments()
+        public async Task<IActionResult> GetScannedDocuments()
         {
-            return Ok(_documentService.GetScannedDocument());
+            return Ok( await _documentService.GetScannedDocument());
         }
     }
 }

@@ -1,24 +1,29 @@
 ﻿using Shared.Models;
-using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
+using DataService.src.Repository;
 
 namespace DataService.src.Database
 {
     public class DatabaseService : IDatabaseService
     {
-        public object CheckWriteAndReturnDocumentInfo(ExternalObjectModel externalModel)
+        private readonly IDbRepository<ExternalObjectModel> _dbRepository;
+        public DatabaseService(IDbRepository<ExternalObjectModel> dbRepository)
         {
-            throw new NotImplementedException();
+            _dbRepository = dbRepository;
         }
 
-        public object GetDocumentInfo(Guid documentId, int[] pages)
-        {
-            throw new NotImplementedException();
-        }
+        public async Task<ExternalObjectModel> CheckWriteAndReturnDocumentInfo(ExternalObjectModel externalModel) => 
+               await _dbRepository.AddDocument(externalModel);
+        
+        public async Task<ExternalObjectModel> GetDocumentInfo(string documentNumber) =>
+              await _dbRepository.GetDocumentInfo(documentNumber);
 
-        public List<object> GetScannedDocuments()
-        {
-            throw new NotImplementedException();
-        }
+        public async Task<List<ExternalObjectModel>> GetScannedDocuments() =>
+               await _dbRepository.GetDocuments();
+
+
     }
 }
+
+

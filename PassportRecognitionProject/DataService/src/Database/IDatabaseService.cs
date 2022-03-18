@@ -1,9 +1,6 @@
 ﻿using Shared.Models;
-using System;
 using System.Collections.Generic;
-
-using DocumentInfoModel = System.Object;
-using DocumentShortInfo = System.Object;
+using System.Threading.Tasks;
 
 namespace DataService.src.Database
 {
@@ -17,18 +14,17 @@ namespace DataService.src.Database
         /// </summary>
         /// <param name="externalModel"> Данные полученные от внешнего сервиса </param>
         /// <returns> Преобразованная информация о документе </returns>
-        public DocumentInfoModel CheckWriteAndReturnDocumentInfo(ExternalObjectModel externalModel);
+        public Task<ExternalObjectModel> CheckWriteAndReturnDocumentInfo(ExternalObjectModel externalModel);
 
         /// <summary>
         /// Получение списка уже сохранённых документов
         /// </summary>
-        public List<DocumentShortInfo> GetScannedDocuments();
+        public Task<List<ExternalObjectModel>> GetScannedDocuments();
 
         /// <summary>
         /// Получение информации по конкретному документу
         /// </summary>
-        /// <param name="documentId"> Уникальный идентификатор документа </param>
-        /// <param name="pages"> Конкретные страницы запроса </param>
-        public DocumentInfoModel GetDocumentInfo(Guid documentId, int[] pages);
+        /// <param name="documentNumber"> Уникальный идентификатор документа </param>
+        public Task<ExternalObjectModel> GetDocumentInfo(string documentNumber);
     }
 }

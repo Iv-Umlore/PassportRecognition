@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-
-using DocumentInfoModel = System.Object;
-using DocumentShortInfo = System.Object;
 using ExternalService.src;
 using DataService.src.Database;
 using Shared.Models;
@@ -21,22 +18,19 @@ namespace PassportRecognitionProject.src.Services
             _databaseService = databaseService;
         }
 
-        public async Task<DocumentInfoModel> RecognitionDocument(byte[] image)
+        public async Task<ExternalObjectModel> RecognitionDocument(byte[] image)
         {
             var externalInfo = await GetRecognitionDocFromExternalService(image);
-            return AddToDataBase(externalInfo);
+            return await AddToDataBase(externalInfo);
         }
 
-        public DocumentInfoModel GetDocumentInfo(Guid documentId, int[] pages)
-        {
-            return _databaseService.GetDocumentInfo(documentId, pages);
-        }
+        public async Task<ExternalObjectModel> GetDocumentInfo(string documentNumber) =>
+               await _databaseService.GetDocumentInfo(documentNumber);
+         
+        public async Task<List<ExternalObjectModel>> GetScannedDocument() =>
+               await _databaseService.GetScannedDocuments();
 
-        public List<DocumentShortInfo> GetScannedDocument()
-        {
-            return _databaseService.GetScannedDocuments();
-        }
-
+        
         /// <summary>
         /// Получить от внешнего сервиса распознанную информация с изображения документа
         /// </summary>
@@ -53,9 +47,11 @@ namespace PassportRecognitionProject.src.Services
         /// </summary>
         /// <param name="externalModel"> Инофрмация полученная от внешнего сервиса </param>
         /// <returns> Расшифрованную и универсальную модель документа </returns>
-        private DocumentInfoModel AddToDataBase(ExternalObjectModel externalModel)
+        private async Task<ExternalObjectModel> AddToDataBase(ExternalObjectModel externalModel)
         {
-            return _databaseService.CheckWriteAndReturnDocumentInfo(externalModel);
+            return await _databaseService.CheckWriteAndReturnDocumentInfo(externalModel);
         }
+
+
     }
 }

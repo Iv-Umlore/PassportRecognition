@@ -1,5 +1,0 @@
-{
-  "ConnectionString": {
-    "mongoDb": "mongodb://root:example@localhost:27017/"
-  }
-}
