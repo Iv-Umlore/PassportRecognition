@@ -20,19 +20,19 @@ namespace PassportRecognitionProject.src.Services
         /// <param name="image"> Исходное изображение </param>
         /// <returns> Информацию об отправляемом документе </returns>
         // object - DocumentInfoModel
-        public Task<ExternalObjectModel> RecognitionDocument(byte[] image);
+        public Task<MongoDataModel> RecognitionDocument(byte[] image);
 
         /// <summary>
         /// Получение информации об сохранённом документе
         /// </summary>
         /// <param name="documentNumber"> уникальный идентификатор документа </param>
         /// <returns> Информация по запрашиваемому документу </returns>
-        public Task<ExternalObjectModel> GetDocumentInfo(string documentNumber);
+        public Task<MongoDataModel> GetDocumentInfo(string documentNumber);
 
         /// <summary>
         /// Получить список отсканированных документов
         /// </summary>
         /// <returns> Список краткой инормации об готовых документах для последующего выбора </returns>
-        public Task<List<ExternalObjectModel>> GetScannedDocument();
+        public Task<List<MongoDataModel>> GetScannedDocument();
     }
 }

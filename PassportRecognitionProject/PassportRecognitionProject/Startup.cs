@@ -34,7 +34,7 @@ namespace PassportRecognitionProject
             services.AddScoped<IExternalRecognitionService, ExternalRecognitionService>();
             services.AddScoped<IDatabaseService, DatabaseService>();
             services.AddScoped<IRequestSender, RegulaRequestSender>();
-            services.AddScoped<IDbRepository<ExternalObjectModel>, MongoDbRepository>();
+            services.AddScoped<IDbRepository<MongoDataModel>, MongoDbRepository>();
             services.Configure<ExternalServiceInfo>(Configuration.GetSection("ExternalServiceInfo"));
             services.Configure<MongoDbInfo>(Configuration.GetSection("MongoDbInfo"));
 

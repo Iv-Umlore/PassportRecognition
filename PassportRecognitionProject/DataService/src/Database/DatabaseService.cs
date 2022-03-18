@@ -7,19 +7,29 @@ namespace DataService.src.Database
 {
     public class DatabaseService : IDatabaseService
     {
-        private readonly IDbRepository<ExternalObjectModel> _dbRepository;
-        public DatabaseService(IDbRepository<ExternalObjectModel> dbRepository)
+        private readonly IDbRepository<MongoDataModel> _dbRepository;
+        public DatabaseService(IDbRepository<MongoDataModel> dbRepository)
         {
             _dbRepository = dbRepository;
         }
 
-        public async Task<ExternalObjectModel> CheckWriteAndReturnDocumentInfo(ExternalObjectModel externalModel) => 
-               await _dbRepository.AddDocument(externalModel);
+        public async Task<MongoDataModel> CheckWriteAndReturnDocumentInfo(ExternalObjectModel externalModel, byte[] image)
+        {
+            MongoDataModel model = new MongoDataModel()
+            {
+                DocNumber = externalModel.DocNumber,
+                PersonName = externalModel.FirstSecondName,
+                DocInfo = externalModel,
+                Image = image
+            };
+
+            return await _dbRepository.AddDocument(model);
+        }
         
-        public async Task<ExternalObjectModel> GetDocumentInfo(string documentNumber) =>
+        public async Task<MongoDataModel> GetDocumentInfo(string documentNumber) =>
               await _dbRepository.GetDocumentInfo(documentNumber);
 
-        public async Task<List<ExternalObjectModel>> GetScannedDocuments() =>
+        public async Task<List<MongoDataModel>> GetScannedDocuments() =>
                await _dbRepository.GetDocuments();
 
 

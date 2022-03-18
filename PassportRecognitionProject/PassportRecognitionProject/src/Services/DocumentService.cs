@@ -18,16 +18,16 @@ namespace PassportRecognitionProject.src.Services
             _databaseService = databaseService;
         }
 
-        public async Task<ExternalObjectModel> RecognitionDocument(byte[] image)
+        public async Task<MongoDataModel> RecognitionDocument(byte[] image)
         {
             var externalInfo = await GetRecognitionDocFromExternalService(image);
-            return await AddToDataBase(externalInfo);
+            return await AddToDataBase(externalInfo, image);
         }
 
-        public async Task<ExternalObjectModel> GetDocumentInfo(string documentNumber) =>
+        public async Task<MongoDataModel> GetDocumentInfo(string documentNumber) =>
                await _databaseService.GetDocumentInfo(documentNumber);
          
-        public async Task<List<ExternalObjectModel>> GetScannedDocument() =>
+        public async Task<List<MongoDataModel>> GetScannedDocument() =>
                await _databaseService.GetScannedDocuments();
 
         
@@ -47,9 +47,9 @@ namespace PassportRecognitionProject.src.Services
         /// </summary>
         /// <param name="externalModel"> Инофрмация полученная от внешнего сервиса </param>
         /// <returns> Расшифрованную и универсальную модель документа </returns>
-        private async Task<ExternalObjectModel> AddToDataBase(ExternalObjectModel externalModel)
+        private async Task<MongoDataModel> AddToDataBase(ExternalObjectModel externalModel, byte[] image)
         {
-            return await _databaseService.CheckWriteAndReturnDocumentInfo(externalModel);
+            return await _databaseService.CheckWriteAndReturnDocumentInfo(externalModel, image);
         }
 
 

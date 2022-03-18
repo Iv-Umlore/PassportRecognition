@@ -14,17 +14,17 @@ namespace DataService.src.Database
         /// </summary>
         /// <param name="externalModel"> Данные полученные от внешнего сервиса </param>
         /// <returns> Преобразованная информация о документе </returns>
-        public Task<ExternalObjectModel> CheckWriteAndReturnDocumentInfo(ExternalObjectModel externalModel);
+        public Task<MongoDataModel> CheckWriteAndReturnDocumentInfo(ExternalObjectModel externalModel, byte[] image);
 
         /// <summary>
         /// Получение списка уже сохранённых документов
         /// </summary>
-        public Task<List<ExternalObjectModel>> GetScannedDocuments();
+        public Task<List<MongoDataModel>> GetScannedDocuments();
 
         /// <summary>
         /// Получение информации по конкретному документу
         /// </summary>
         /// <param name="documentNumber"> Уникальный идентификатор документа </param>
-        public Task<ExternalObjectModel> GetDocumentInfo(string documentNumber);
+        public Task<MongoDataModel> GetDocumentInfo(string documentNumber);
     }
 }
