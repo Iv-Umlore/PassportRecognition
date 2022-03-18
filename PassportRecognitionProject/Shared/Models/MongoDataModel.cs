@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿using MongoDB.Bson;
 namespace Shared.Models
 {
     public class MongoDataModel
     {
+        public ObjectId Id { get; set; }
+
         public string DocNumber { get; set; }
 
         public string PersonName { get; set; }

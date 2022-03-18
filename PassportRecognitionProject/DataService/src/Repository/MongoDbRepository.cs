@@ -21,6 +21,7 @@ namespace DataService.src.Repository
             client = new MongoClient(_mongoInfo.Value.ConnectionString);
             db = client.GetDatabase(_mongoInfo.Value.DbName);
         }
+
         private IMongoCollection<MongoDataModel> Documents => db.GetCollection<MongoDataModel>("docs");
 
         public async Task<MongoDataModel> AddDocument(MongoDataModel model)
@@ -54,7 +55,6 @@ namespace DataService.src.Repository
             }).ToList();
 
         }
-
 
     }
 }
